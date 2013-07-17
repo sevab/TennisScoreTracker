@@ -48,7 +48,7 @@ describe("Tennis-Game", function() {
 
 
 
-			it("Game.win method returns 40-30", function() {
+			it("Game.win method returns 30-40", function() {
 				player1 = new Player();
 				player2 = new Player();
 				game = new Game(player1, player2);
@@ -56,7 +56,7 @@ describe("Tennis-Game", function() {
 				game.win(player1);
 				game.win(player1);
 				game.win(player2);
-				expect(game.win(player2)).toEqual("40-30");
+				expect(game.win(player2)).toEqual("30-40");
 			});
 
 			it("Game.win method returns 'deuce' instead for ties after 30", function() {
@@ -92,7 +92,7 @@ describe("Tennis-Game", function() {
 				expect(game.win(player2)).toEqual("deuce");
 			});
 
-			it("Game.win method returns 'game' when one of players wins at a score 0-4", function() {
+			it("Game.win method returns 'game' when one of players wins at a score 0-40", function() {
 				player1 = new Player();
 				player2 = new Player();
 				game = new Game(player1, player2);
@@ -102,7 +102,7 @@ describe("Tennis-Game", function() {
 				game.win(player2);
 				expect(game.win(player2)).toEqual("game");
 			});
-			it("Game.win method returns 'game' when one of players wins at a score 0-4", function() {
+			it("Game.win method returns 'game' when one of players wins at a score 0-40", function() {
 				player1 = new Player();
 				player2 = new Player();
 				game = new Game(player1, player2);
@@ -116,7 +116,54 @@ describe("Tennis-Game", function() {
 				expect(game.win(player2)).toEqual("ads-40");
 			});
 
+			it("Game.win method returns 'game' when one of players wins at a score 0-40", function() {
+				player1 = new Player();
+				player2 = new Player();
+				game = new Game(player1, player2);
+				game.win(player1);
+				game.win(player1);
+				game.win(player1);
+				game.win(player1);
+				game.win(player1);
+				game.win(player1);
 
+				game.win(player2);
+				game.win(player2);
+				game.win(player2);
+				game.win(player2);
+				game.win(player2);
+				game.win(player2);
+				expect(game.win(player2)).toEqual("ads-40");
+			});
+
+			it("Opponent is player 1", function() {
+				player1 = new Player();
+				player2 = new Player();
+				game = new Game(player1, player2);
+
+				expect(game.opponent(player1)).toEqual(player2);
+			});
+
+			it("Opponent is player 2", function() {
+				player1 = new Player();
+				player2 = new Player();
+				game = new Game(player1, player2);
+
+				expect(game.opponent(player2)).toEqual(player1);
+			});
+
+
+			it("Winning the game incremenets players game score and resets both players points", function() {
+				player1 = new Player();
+				player2 = new Player();
+				game = new Game(player1, player2);
+				
+				game.win(player2);
+				game.win(player2);
+				game.win(player2);
+				expect(game.win(player2)).toEqual("game");
+			}
+				)
 		});
 
 	});
