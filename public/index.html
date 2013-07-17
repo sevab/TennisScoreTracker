@@ -2,17 +2,7 @@
 <head>
 	<script src="javascripts/tennis_game.js"></script>
 	<title>Tennis Score</title>
-<style> 
-@font-face {
-	font-family: tablo;
-	src: url(tablo.ttf);
-	src: local(''),
-         url('tablo.ttf') format('tff'), url('tablo.ttf') format('truetype');
-}
-h1 {
-	font-family:tablo;
-}
-
+<style>
 body {
 	margin:50px 0px; padding:0px;
 	text-align:center;
@@ -24,10 +14,10 @@ body {
 
 
 .grid {
-    width:1000px;
+    width:1100px;
     height:300px;
     position:absolute;
-    left:30%;
+    left:20%;
     top:50%;
     margin:-202.5px 0 0 -202.5px;
     background-color: none;
@@ -50,15 +40,15 @@ td {
 <body>
 <table class="grid">
 <tr>
-<td></td><td>Points</td><td>Games</td>
+<td></td><td>Points</td><td>Games</td><td>Sets</td>
 </tr>
 
 <tr>
-<td class="p" id="p1">Player 1</td><td id="1">Love</td><td id="g1">0</td>
+<td class="p" id="p1">Player 1</td><td id="1">Love</td><td id="g1">0</td><td id="s1">0</td>
 </tr>
 
 <tr>
-<td class="p" id="p2">Player 2</td><td id="2">Love</td><td id="g2">0</td>
+<td class="p" id="p2">Player 2</td><td id="2">Love</td><td id="g2">0</td><td id="s2">0</td>
 </tr>
 </table>
 
@@ -81,6 +71,10 @@ td {
 		game.win(player);
 		document.getElementById('1').innerHTML = game.getScore(player1);
 		document.getElementById('2').innerHTML = game.getScore(player2);
+		document.getElementById('g1').innerHTML = player1.getGames();
+		document.getElementById('g2').innerHTML = player2.getGames();
+		document.getElementById('s1').innerHTML = player1.getSets();
+		document.getElementById('s2').innerHTML = player2.getSets();
 	};
 
 
