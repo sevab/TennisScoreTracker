@@ -5,3 +5,6 @@
 
 * Score the player by clicking on their name
 ![alt tag](./screenshot2.png)
+
+Known bugs:
+* Display tie-break game points as 1..6 rather than 15..60
