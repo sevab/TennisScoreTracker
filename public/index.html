@@ -1,5 +1,9 @@
+
+
+
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="javascripts/tennis_game.js"></script>
 	<title>Tennis Score</title>
 <style>
@@ -14,7 +18,7 @@ body {
 
 
 .grid {
-    width:1100px;
+    width:1400px;
     height:300px;
     position:absolute;
     left:20%;
@@ -23,7 +27,67 @@ body {
     background-color: none;
 }
 
-td {
+/**/
+input[type=radio] {
+    display:none; 
+    margin:10px;
+}
+ 
+input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    padding: 4px 12px;
+    background-color: black;
+    border: none;
+    width: 10px;
+    height: 30px;
+    border:1px yellow solid;
+}
+
+input[type=radio]:hover + label:hover {
+  background-color:LemonChiffon;
+}
+
+
+input[type=radio]:checked + label { 
+    background-color: yellow;
+}
+/**/
+
+
+
+
+input[type="text"], textarea {
+  background-color : black;
+  border:0px yellow solid;
+  color: yellow;
+  font-family:"Erbos Draco Open NBP Regular";
+  width: 200px;
+  height: 50px;
+  font-size: 50;
+  outline: none; 
+}
+
+
+input[type="button"] {
+	background-color: black;
+	color: yellow;
+	font-family:"Erbos Draco Open NBP Regular";
+	width: 170px;
+	height: 60px;
+	font-size: 40;
+  border:1px yellow solid;
+}
+
+input[type="button"]:active {
+	background-color: yellow;
+	color: black;
+	font-family:"Erbos Draco Open NBP Regular";
+}
+
+
+
+form, td {
 	font-size: 50;
 	text-align: center;
 	font-family:"Erbos Draco Open NBP Regular";
@@ -37,43 +101,75 @@ td {
 	-ms-user-select: none;
 	user-select: none;
 }
+form {
+	font-size: 50;
+}
 
 .p {
 	cursor:pointer;
 }
+
+
+p {
+	display: inline;
+}
+
+
 </style>
 </head>
 
 
 <body>
-<table class="grid">
+<div class="grid">
+	<form>
+		<p>Player 1: </p><input type="text" name="player1" placeholder="name"><br><br>
+		<p>Player 2: </p><input type="text" name="player2" placeholder="name"><br><br>
+		<input type="radio" name="gender" value="male" id="male" checked><label for="male"></label> Male
+		<input type="radio" name="gender" value="female" id="female"><label for="female"></label> Female<br><br>
+		<input type="button" value="PLAY!" onclick="submitData()">
+	</form>
+</div>
+
+<table class="grid" style="display:none">
 <tr>
-<td></td><td>Points</td><td>Games</td><td>Sets</td>
+<td></td><td>Points</td><td>Games</td><td>Sets</td><td id="match"></td>
 </tr>
 
 <tr>
-<td class="p" id="p1">Player 1</td><td id="1">Love</td><td id="g1">0</td><td id="s1">0</td>
+<td class="p" id="p1">Player 1</td><td id="1">Love</td><td id="g1">0</td><td id="s1">0</td><td id="r1"></td>
 </tr>
 
 <tr>
-<td class="p" id="p2">Player 2</td><td id="2">Love</td><td id="g2">0</td><td id="s2">0</td>
+<td class="p" id="p2">Player 2</td><td id="2">Love</td><td id="g2">0</td><td id="s2">0</td><td id="r2"></td>
 </tr>
 </table>
 
+
 <script type="text/javascript">
-	player1 = new Player();
-	player2 = new Player();
-	game = new Game(player1, player2, "male");
+function submitData() {
+	var player1 = new Player(document.getElementsByName('player1')[0].value);
+	var player2 = new Player(document.getElementsByName('player2')[0].value);
+
+	if (document.getElementsByName('player1')[0].value.length == 0 || document.getElementsByName('player2')[0].value == 0){
+		return false;
+	}
+
+	var gender = $('input[name="gender"]:checked').val();
+	document.getElementsByClassName('grid')[0].style.display = "none";
+	document.getElementsByClassName('grid')[1].style.display = "inline";
+	$("#p1").html(player1.name);
+	$("#p2").html(player2.name)
+
+	game = new Game(player1, player2, gender);
+
+	var u1 = function() { updateScore(player1); }
+	var u2 = function() { updateScore(player2); }
 	
 	var p1 = document.getElementById('p1');
-	p1.addEventListener('click', function(){
-		updateScore(player1);
-	});
+	p1.addEventListener('click', u1);
 
 	var p2 = document.getElementById('p2');
-	p2.addEventListener('click', function(){
-		updateScore(player2);
-	});
+	p2.addEventListener('click', u2);
 
 	function updateScore(player) {
 		game.win(player);
@@ -83,11 +179,20 @@ td {
 		document.getElementById('g2').innerHTML = player2.getGames();
 		document.getElementById('s1').innerHTML = player1.getSets();
 		document.getElementById('s2').innerHTML = player2.getSets();
+		if (game.isMatchWon() != false) {
+			if (game.isMatchWon() == "Player 1") {
+				document.getElementById('r1').innerHTML = "Won";
+			} else {
+				document.getElementById('r2').innerHTML = "Won";
+			}
+			document.getElementById('match').innerHTML = "Match";
+			p1.removeEventListener('click', u1);
+			p2.removeEventListener('click', u2);
+		};
 	};
-
-
-
+}
 </script>
+
 
 </body>
 

@@ -1,5 +1,6 @@
-function Player() {
-	this.name = 'Alex';
+function Player(name) {
+	if(typeof(name)==='undefined') name = 'Alex';
+	this.name = name;
 	this.points = 0;
 	this.gamesWon = 0;
 	this.setsWon = 0;
@@ -49,18 +50,19 @@ function Game(player1, player2, gender) {
 		'3' : '40'
 	}
 
+
+	if (this.gender == 'male') {
+		this.limit = 2;
+	} else{
+		this.limit = 1;
+	};
+
 	this.isTie = function() {
 		return this.player1.getPoints() == this.player2.getPoints();
 	}
 
 
 	this.getScore = function(player) {
-		// if (Math.abs(this.player2.getPoints()-this.player1.getPoints()) > 1) {
-		// 	if (this.player1.getPoints() > 3 || this.player2.getPoints() > 3) {
-		// 		return "game";
-		// 	};
-		// };
-
 		var b = player.getPoints()-this.opponent(player).getPoints();
 		if (Math.abs(b) > 1) {
 			if (this.player1.getPoints() > 3 || this.player2.getPoints() > 3) {
@@ -146,7 +148,18 @@ function Game(player1, player2, gender) {
 
 		this.gamesArchive.push({
 			x: this.player2.getGames()
-		})
+		});
+	}
+
+	this.isMatchWon = function() {
+		if (this.player1.getSets() > this.limit){
+			return "Player 1"
+		}
+		else if (this.player2.getSets() > this.limit) {
+			return "Player 2"
+		} else {
+			return false;
+		}
 	}
 
 };
