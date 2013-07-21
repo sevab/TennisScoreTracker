@@ -51,14 +51,14 @@ function Game(player1, player2, gender) {
 	}
 
 
-	if (this.gender == 'male') {
+	if (this.gender === 'male') {
 		this.limit = 2;
 	} else{
 		this.limit = 1;
 	};
 
 	this.isTie = function() {
-		return this.player1.getPoints() == this.player2.getPoints();
+		return this.player1.getPoints() === this.player2.getPoints();
 	}
 
 
@@ -82,7 +82,7 @@ function Game(player1, player2, gender) {
 
 		if (this.player1.getPoints() >= 3 && this.player2.getPoints() >= 3) {
 			var a = player.getPoints()-this.opponent(player).getPoints();
-			if (Math.abs(a) == 1) {
+			if (Math.abs(a) === 1) {
 				if (a > 0) {
 					return "ADV";
 				} else {
@@ -103,7 +103,7 @@ function Game(player1, player2, gender) {
 
 
 	this.opponent = function(player) {
-		if(player == this.player1) {
+		if(player === this.player1) {
 			return this.player2;
 		}
 		else {
@@ -120,9 +120,9 @@ function Game(player1, player2, gender) {
 
 
 	this.isSetWon = function(player) {
-		if (player.getGames() == 6) {
+		if (player.getGames() === 6) {
 
-			if (this.opponent(player).getGames() == 6) {
+			if (this.opponent(player).getGames() === 6) {
 				return true
 			};
 
@@ -131,7 +131,7 @@ function Game(player1, player2, gender) {
 			};
 		};
 
-		if (player.getGames() == 7) {
+		if (player.getGames() === 7) {
 			this.winSet(player);
 		}
 	}
