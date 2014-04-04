@@ -1,9 +1,9 @@
 ## A legit Tennis Scoring Board adhereing to Wimbledon Rules
 
-* Give players name and choose gender
+* Give players' names and choose their gender
 ![alt tag](./screenshot1.png)
 
-* Score the player by clicking on their name
+* Update player score by clicking on their name
 ![alt tag](./screenshot2.png)
 
 Known bugs:
